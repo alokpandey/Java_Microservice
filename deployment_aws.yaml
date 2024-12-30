@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-project
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      imagePullSecrets:
+        - name: my-secret
+      containers:
+      - name: my-app
+        image: 472029722081.dkr.ecr.us-east-1.amazonaws.com/my-app:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_HOST
+          value: "database-1.cgtzvcolqx66.us-east-1.rds.amazonaws.com"
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials-1
+              key: username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials-1
+              key: password
+

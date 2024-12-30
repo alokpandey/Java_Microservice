@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-user-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sample-user
+  template:
+    metadata:
+      labels:
+        app: sample-user
+    spec:
+      containers:
+      - name: sample-user
+        image: gcr.io/instance-level-test/sample-user:latest
+        ports:
+        - containerPort: 80
+        env:
+          - name: MYSQL_HOST
+            value: "34.134.149.80"
+          - name: MYSQL_PORT
+            value: "3306"
+          - name: MYSQL_USER
+            value: "root"
+          - name: MYSQL_PASSWORD
+            value: "!!@Muchhelp97"
